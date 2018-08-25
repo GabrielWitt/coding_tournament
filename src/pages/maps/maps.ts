@@ -45,33 +45,6 @@ export class MapsPage {
     })
   }
 
-  addMarker(gps_location,alert_type,index){
-    let cords = gps_location.split(",")
-    console.log(cords,alert_type)
-    let myLatLng = {lat: cords[0], lng: cords[1]}; 
-    this.markers[index+1] = new google.maps.Marker({
-      position: myLatLng,
-      map: this.map,
-      title: alert_type
-    });
-   
-    let content = "<h4>"+alert_type+"</h4>";         
-   
-    this.addInfoWindow(this.markers[index+1], content);
-  }
-
-  addInfoWindow(marker, content){
- 
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-   
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
-   
-  }
-
   loadMap(position: Geoposition){
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
@@ -86,18 +59,35 @@ export class MapsPage {
     // create map
     this.map = new google.maps.Map(mapEle, {
       center: myLatLng,
-      zoom: 12
+      zoom: 14
     });
 
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       this.markers[0] = new google.maps.Marker({
         position: myLatLng,
         map: this.map,
-        title: 'Mi ubicación'
-      });
-      mapEle.classList.add('show-map');
+        title: 'Mi ubicación',
+        label: 'Mi ubicación'
+      });      
       for(var i=0;i<this.Alerts.length;i++){
-        this.addMarker(this.Alerts[i].gps_location,this.Alerts[i].alert_type,i)
+        let cords = this.Alerts[i].gps_location.split(",")
+        let newcords = new google.maps.LatLng(cords[0], cords[1]); 
+        var marker = new google.maps.Marker({
+          position: newcords,
+          animation: google.maps.Animation.DROP,
+          title: this.Alerts[i].alert_type
+        });  
+        marker.addListener('click', toggleBounce);
+        marker.setMap(this.map);
+      }
+      mapEle.classList.add('show-map');
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
       }
     });
   }

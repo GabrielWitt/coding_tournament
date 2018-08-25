@@ -51,27 +51,6 @@ var MapsPage = /** @class */ (function () {
             console.log(error);
         });
     };
-    MapsPage.prototype.addMarker = function (gps_location, alert_type, index) {
-        var cords = gps_location.split(",");
-        console.log(cords, alert_type);
-        var myLatLng = { lat: cords[0], lng: cords[1] };
-        this.markers[index + 1] = new google.maps.Marker({
-            position: myLatLng,
-            map: this.map,
-            title: alert_type
-        });
-        var content = "<h4>" + alert_type + "</h4>";
-        this.addInfoWindow(this.markers[index + 1], content);
-    };
-    MapsPage.prototype.addInfoWindow = function (marker, content) {
-        var _this = this;
-        var infoWindow = new google.maps.InfoWindow({
-            content: content
-        });
-        google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open(_this.map, marker);
-        });
-    };
     MapsPage.prototype.loadMap = function (position) {
         var _this = this;
         var latitude = position.coords.latitude;
@@ -84,23 +63,40 @@ var MapsPage = /** @class */ (function () {
         // create map
         this.map = new google.maps.Map(mapEle, {
             center: myLatLng,
-            zoom: 12
+            zoom: 14
         });
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             _this.markers[0] = new google.maps.Marker({
                 position: myLatLng,
                 map: _this.map,
-                title: 'Mi ubicación'
+                title: 'Mi ubicación',
+                label: 'Mi ubicación'
             });
-            mapEle.classList.add('show-map');
             for (var i = 0; i < _this.Alerts.length; i++) {
-                _this.addMarker(_this.Alerts[i].gps_location, _this.Alerts[i].alert_type, i);
+                var cords = _this.Alerts[i].gps_location.split(",");
+                var newcords = new google.maps.LatLng(cords[0], cords[1]);
+                var marker = new google.maps.Marker({
+                    position: newcords,
+                    animation: google.maps.Animation.DROP,
+                    title: _this.Alerts[i].alert_type
+                });
+                marker.addListener('click', toggleBounce);
+                marker.setMap(_this.map);
+            }
+            mapEle.classList.add('show-map');
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                }
+                else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
             }
         });
     };
     MapsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-maps',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\maps\maps.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Mapa</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n    <div id="map"></div>\n</ion-content>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\maps\maps.html"*/,
+            selector: 'page-maps',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\maps\maps.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Mapa</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n    <div id="map"></div>\n</ion-content>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\maps\maps.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_alerts__["a" /* AlertsProvider */]) === "function" && _c || Object])
     ], MapsPage);
