@@ -28,6 +28,7 @@ var MapsPage = /** @class */ (function () {
         this.geolocation = geolocation;
         this.alertsProv = alertsProv;
         this.Alerts = [];
+        this.markers = [];
     }
     MapsPage.prototype.ionViewDidLoad = function () {
         this.loadAlerts();
@@ -50,6 +51,27 @@ var MapsPage = /** @class */ (function () {
             console.log(error);
         });
     };
+    MapsPage.prototype.addMarker = function (gps_location, alert_type, index) {
+        var cords = gps_location.split(",");
+        console.log(cords, alert_type);
+        var myLatLng = { lat: cords[0], lng: cords[1] };
+        this.markers[index + 1] = new google.maps.Marker({
+            position: myLatLng,
+            map: this.map,
+            title: alert_type
+        });
+        var content = "<h4>" + alert_type + "</h4>";
+        this.addInfoWindow(this.markers[index + 1], content);
+    };
+    MapsPage.prototype.addInfoWindow = function (marker, content) {
+        var _this = this;
+        var infoWindow = new google.maps.InfoWindow({
+            content: content
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(_this.map, marker);
+        });
+    };
     MapsPage.prototype.loadMap = function (position) {
         var _this = this;
         var latitude = position.coords.latitude;
@@ -65,12 +87,15 @@ var MapsPage = /** @class */ (function () {
             zoom: 12
         });
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
-            var marker = new google.maps.Marker({
+            _this.markers[0] = new google.maps.Marker({
                 position: myLatLng,
                 map: _this.map,
-                title: 'Hello World!'
+                title: 'Mi ubicación'
             });
             mapEle.classList.add('show-map');
+            for (var i = 0; i < _this.Alerts.length; i++) {
+                _this.addMarker(_this.Alerts[i].gps_location, _this.Alerts[i].alert_type, i);
+            }
         });
     };
     MapsPage = __decorate([
@@ -237,7 +262,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n    <div item-end>\n        <button ion-button icon-only outline (click)="filterList()">\n          <ion-icon name="search"></ion-icon>\n        </button></div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n  <button ion-button full (click)="openMaps()">Mapa</button>\n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
+            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <button ion-button full (click)="openMaps()">Mapa</button>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n    <div item-end>\n        <button ion-button icon-only outline (click)="filterList()">\n          <ion-icon name="search"></ion-icon>\n        </button></div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */]) === "function" && _b || Object])
     ], HomePage);

@@ -78,7 +78,7 @@ Alert.count({}, function(err, count){
             var newAlert = new Alert({
                 alert_type: alertTypes[getRandomInt(0,20)],
                 description: alertTypes[getRandomInt(0,20)],
-                gps_location: "-0."+getRandomInt(11,40)+getRandomInt(0,100)+",-78"+getRandomInt(39,52)+getRandomInt(0,100),
+                gps_location: "-0."+getRandomInt(11,40)+getRandomInt(0,100)+",-78."+getRandomInt(39,52)+getRandomInt(0,100),
                 alert_date: newdate,
                 uploadDate: newdate
             });

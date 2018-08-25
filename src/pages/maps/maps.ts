@@ -14,6 +14,7 @@ export class MapsPage {
 
   map: any;
   Alerts = [];
+  markers=[];
 
   constructor(
     public navCtrl: NavController, 
@@ -44,6 +45,33 @@ export class MapsPage {
     })
   }
 
+  addMarker(gps_location,alert_type,index){
+    let cords = gps_location.split(",")
+    console.log(cords,alert_type)
+    let myLatLng = {lat: cords[0], lng: cords[1]}; 
+    this.markers[index+1] = new google.maps.Marker({
+      position: myLatLng,
+      map: this.map,
+      title: alert_type
+    });
+   
+    let content = "<h4>"+alert_type+"</h4>";         
+   
+    this.addInfoWindow(this.markers[index+1], content);
+  }
+
+  addInfoWindow(marker, content){
+ 
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+   
+  }
+
   loadMap(position: Geoposition){
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
@@ -62,12 +90,15 @@ export class MapsPage {
     });
 
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      let marker = new google.maps.Marker({
+      this.markers[0] = new google.maps.Marker({
         position: myLatLng,
         map: this.map,
-        title: 'Hello World!'
+        title: 'Mi ubicación'
       });
       mapEle.classList.add('show-map');
+      for(var i=0;i<this.Alerts.length;i++){
+        this.addMarker(this.Alerts[i].gps_location,this.Alerts[i].alert_type,i)
+      }
     });
   }
 }
