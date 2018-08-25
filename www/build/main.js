@@ -36,8 +36,8 @@ var MapsPage = /** @class */ (function () {
     MapsPage.prototype.loadAlerts = function () {
         var _this = this;
         this.alertsProv.getAllAlerts().then(function (answ) {
+            console.log(answ);
             _this.Alerts = answ;
-            console.log(_this.Alerts);
             _this.getPosition();
         });
     };
@@ -129,9 +129,17 @@ webpackEmptyAsyncContext.id = 111;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"../pages/alert-list/alert-list.module": [
+		276,
+		5
+	],
+	"../pages/create-alert/create-alert.module": [
+		274,
+		0
+	],
 	"../pages/maps/maps.module": [
 		273,
-		0
+		6
 	]
 };
 function webpackAsyncContext(req) {
@@ -159,6 +167,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_alerts__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__maps_maps__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__alert_list_alert_list__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -172,93 +181,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomePage = /** @class */ (function () {
     function HomePage(nav, alertsProv) {
         this.nav = nav;
         this.alertsProv = alertsProv;
         this.Alerts = [];
-        this.alertList = [];
-        this.showAlertList = [];
-        this.loadMore = true;
-        this.Types = [
-            'Todos',
-            'Asalto',
-            'Robo',
-            'Pelea',
-            'Borrachera',
-            'Venta de Drogas',
-            'Asesinato Balacera',
-            'Vandalismo',
-            'Manifestación Violenta',
-            'Abuso policial',
-            'Abuso Infantil',
-            'Violencia Escolar',
-            'Atropellamiento',
-            'Persona Sospechosa',
-            'Posible Ladrón',
-            'Prostitución',
-            'Violencia Domestica',
-            'Posible Terrorismo',
-            'Pandillas Molestando',
-            'Soborno a Policías',
-            'Secuestro Express',
-            'Otro'
-        ];
         this.filter = "";
         this.showNumber = 10;
         this.loadAlerts();
-        this.openMaps();
     }
     HomePage.prototype.loadAlerts = function () {
         var _this = this;
         this.alertsProv.getAllAlerts().then(function (answ) {
-            //console.log(answ)
+            _this.Alerts = [];
             answ.sort(function (a, b) {
                 a = new Date(a.alert_date);
                 b = new Date(b.alert_date);
                 return a > b ? -1 : a < b ? 1 : 0;
             });
-            _this.Alerts = answ;
-            _this.alertList = _this.Alerts;
-            _this.showList();
+            _this.Alerts.push(answ[0]);
+            _this.Alerts.push(answ[1]);
+            _this.Alerts.push(answ[2]);
+            console.log(_this.Alerts);
         });
     };
-    HomePage.prototype.showList = function () {
-        this.showAlertList = [];
-        this.loadMore = this.showNumber < this.alertList.length;
-        //console.log(this.loadMore)
-        if (this.loadMore) {
-            for (var i = 0; i < this.showNumber; i++) {
-                this.showAlertList.push(this.alertList[i]);
-            }
-        }
-        else {
-            this.showAlertList = this.alertList;
-        }
-    };
-    HomePage.prototype.AddItems = function () {
-        this.showNumber = this.showNumber + 10;
-        this.showList();
-    };
-    HomePage.prototype.filterList = function () {
-        if (this.filter != "" && this.filter != "Todos") {
-            this.alertList = [];
-            for (var i = 0; i < this.Alerts.length; i++) {
-                if (this.Alerts[i].alert_type == this.filter)
-                    this.alertList.push(this.Alerts[i]);
-            }
-        }
-        else {
-            this.alertList = this.Alerts;
-        }
-        this.showList();
+    HomePage.prototype.openList = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_4__alert_list_alert_list__["a" /* AlertListPage */]);
     };
     HomePage.prototype.openMaps = function () {
         this.nav.push(__WEBPACK_IMPORTED_MODULE_3__maps_maps__["a" /* MapsPage */]);
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <button ion-button full (click)="openMaps()">Mapa</button>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n    <div item-end>\n        <button ion-button icon-only outline (click)="filterList()">\n          <ion-icon name="search"></ion-icon>\n        </button></div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
+            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-grid>\n        <ion-row>\n          <ion-col col-12>\n              <ion-list> \n                  <ion-list-header>\n                    Últimos Incidentes\n                  </ion-list-header>\n                  <ion-item *ngFor="let alert of Alerts index as i" style="background-color: #eeeeee;">\n                    <h2>{{alert.alert_type}}</h2>\n                    <p>{{ alert.alert_date | date:\'short\' }}</p>\n                  </ion-item>\n              </ion-list> \n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-6>   \n              <button ion-button full (click)="openList()">Lista</button>\n            </ion-col>\n          <ion-col col-6>            \n            <button ion-button full (click)="openMaps()">Mapa</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */]) === "function" && _b || Object])
     ], HomePage);
@@ -298,14 +254,18 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_alerts__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_maps_maps__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_maps_maps__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_alerts__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_alert_list_alert_list__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_create_alert_create_alert__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -325,14 +285,18 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_maps_maps__["a" /* MapsPage */]
+                __WEBPACK_IMPORTED_MODULE_9__pages_maps_maps__["a" /* MapsPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_alert_list_alert_list__["a" /* AlertListPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_create_alert_create_alert__["a" /* CreateAlertPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_http__["c" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {}, {
                     links: [
-                        { loadChildren: '../pages/maps/maps.module#MapsPageModule', name: 'MapsPage', segment: 'maps', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/maps/maps.module#MapsPageModule', name: 'MapsPage', segment: 'maps', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/create-alert/create-alert.module#CreateAlertPageModule', name: 'CreateAlertPage', segment: 'create-alert', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/alert-list/alert-list.module#AlertListPageModule', name: 'AlertListPage', segment: 'alert-list', priority: 'low', defaultHistory: [] }
                     ]
                 })
             ],
@@ -340,12 +304,14 @@ var AppModule = /** @class */ (function () {
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_maps_maps__["a" /* MapsPage */]
+                __WEBPACK_IMPORTED_MODULE_9__pages_maps_maps__["a" /* MapsPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_alert_list_alert_list__["a" /* AlertListPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_create_alert_create_alert__["a" /* CreateAlertPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_9__providers_alerts__["a" /* AlertsProvider */],
+                __WEBPACK_IMPORTED_MODULE_10__providers_alerts__["a" /* AlertsProvider */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__["a" /* Geolocation */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] },
             ]
@@ -395,12 +361,177 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
 
 //# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 275:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateAlertPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(39);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the CreateAlertPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CreateAlertPage = /** @class */ (function () {
+    function CreateAlertPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    CreateAlertPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CreateAlertPage');
+    };
+    CreateAlertPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-create-alert',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/'<!--\n  Generated template for the CreateAlertPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>create_alert</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]])
+    ], CreateAlertPage);
+    return CreateAlertPage;
+}());
+
+//# sourceMappingURL=create-alert.js.map
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AlertListPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_alerts__ = __webpack_require__(79);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the AlertListPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AlertListPage = /** @class */ (function () {
+    function AlertListPage(nav, alertsProv) {
+        this.nav = nav;
+        this.alertsProv = alertsProv;
+        this.Alerts = [];
+        this.alertList = [];
+        this.showAlertList = [];
+        this.loadMore = true;
+        this.Types = [
+            'Todos',
+            'Asalto',
+            'Robo',
+            'Pelea',
+            'Borrachera',
+            'Venta de Drogas',
+            'Asesinato Balacera',
+            'Vandalismo',
+            'Manifestación Violenta',
+            'Abuso policial',
+            'Abuso Infantil',
+            'Violencia Escolar',
+            'Atropellamiento',
+            'Persona Sospechosa',
+            'Posible Ladrón',
+            'Prostitución',
+            'Violencia Domestica',
+            'Posible Terrorismo',
+            'Pandillas Molestando',
+            'Soborno a Policías',
+            'Secuestro Express',
+            'Otro'
+        ];
+        this.filter = "";
+        this.showNumber = 10;
+        this.loadAlerts();
+    }
+    AlertListPage.prototype.loadAlerts = function () {
+        var _this = this;
+        this.alertsProv.getAllAlerts().then(function (answ) {
+            //console.log(answ)
+            answ.sort(function (a, b) {
+                a = new Date(a.alert_date);
+                b = new Date(b.alert_date);
+                return a > b ? -1 : a < b ? 1 : 0;
+            });
+            _this.Alerts = answ;
+            _this.alertList = _this.Alerts;
+            _this.showList();
+        });
+    };
+    AlertListPage.prototype.showList = function () {
+        this.showAlertList = [];
+        this.loadMore = this.showNumber < this.alertList.length;
+        //console.log(this.loadMore)
+        if (this.loadMore) {
+            for (var i = 0; i < this.showNumber; i++) {
+                this.showAlertList.push(this.alertList[i]);
+            }
+        }
+        else {
+            this.showAlertList = this.alertList;
+        }
+    };
+    AlertListPage.prototype.AddItems = function () {
+        this.showNumber = this.showNumber + 10;
+        this.showList();
+    };
+    AlertListPage.prototype.filterList = function () {
+        if (this.filter != "" && this.filter != "Todos") {
+            this.alertList = [];
+            for (var i = 0; i < this.Alerts.length; i++) {
+                if (this.Alerts[i].alert_type == this.filter)
+                    this.alertList.push(this.Alerts[i]);
+            }
+        }
+        else {
+            this.alertList = this.Alerts;
+        }
+        this.showList();
+    };
+    AlertListPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-alert-list',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/'<!--\n  Generated template for the AlertListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Registro de Incidentes</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n    <div item-end>\n        <button ion-button icon-only outline (click)="filterList()">\n          <ion-icon name="search"></ion-icon>\n        </button></div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */]) === "function" && _b || Object])
+    ], AlertListPage);
+    return AlertListPage;
+    var _a, _b;
+}());
+
+//# sourceMappingURL=alert-list.js.map
 
 /***/ }),
 

@@ -29,8 +29,8 @@ export class MapsPage {
 
   loadAlerts(){
     this.alertsProv.getAllAlerts().then(answ => {
+      console.log(answ)
       this.Alerts = answ;
-      console.log(this.Alerts)
       this.getPosition();
     })
   }

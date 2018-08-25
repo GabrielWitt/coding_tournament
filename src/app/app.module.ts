@@ -8,14 +8,18 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { AlertsProvider } from '../providers/alerts';
 import { MapsPage } from '../pages/maps/maps';
+import { AlertsProvider } from '../providers/alerts';
+import { AlertListPage } from '../pages/alert-list/alert-list';
+import { CreateAlertPage } from '../pages/create-alert/create-alert';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MapsPage
+    MapsPage,
+    AlertListPage,
+    CreateAlertPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,9 @@ import { MapsPage } from '../pages/maps/maps';
   entryComponents: [
     MyApp,
     HomePage,
-    MapsPage
+    MapsPage,
+    AlertListPage,
+    CreateAlertPage
   ],
   providers: [
     StatusBar,

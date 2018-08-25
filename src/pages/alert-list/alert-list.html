@@ -1,0 +1,36 @@
+<!--
+  Generated template for the AlertListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Registro de Incidentes</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+      <ion-label>Filtro por tipo</ion-label>
+      <ion-select [(ngModel)]="filter">
+        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>
+      </ion-select>
+    <div item-end>
+        <button ion-button icon-only outline (click)="filterList()">
+          <ion-icon name="search"></ion-icon>
+        </button></div>
+    </ion-item>
+  <ion-list> 
+      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">
+        <ion-avatar item-start>
+            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->
+        </ion-avatar>
+        <h2>{{alert.alert_type}}</h2>
+        <h3>{{alert.gps_location}}</h3>
+        <p>{{ alert.alert_date | date:'short' }}</p>
+      </ion-item>
+      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">
+          <h2>Mostrar 10 items más</h2>
+      </ion-item>
+  </ion-list> 
+</ion-content>
