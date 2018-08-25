@@ -7,12 +7,94 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>create_alert</ion-title>
+    <ion-title>Formulario de Alerta</ion-title>
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
-
+    <ion-list>
+        <ion-item>
+          <ion-label>Filtro por tipo</ion-label>
+          <ion-select [(ngModel)]="newAlert.alert_type">
+            <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item style="margin-bottom: 10px; border-radius: 15px;">
+          <ion-input type="text" clearInput placeholder="Descripción" [(ngModel)]="newAlert.description" name="description"></ion-input>
+        </ion-item>     
+          <ion-grid>
+              <ion-row>
+                <ion-col col-4>
+                  <ion-item>     
+                  <ion-label>día</ion-label>
+                  <ion-select [(ngModel)]="day">
+                    <ion-option>1</ion-option>
+                    <ion-option>2</ion-option>
+                    <ion-option>3</ion-option>
+                    <ion-option>4</ion-option>
+                    <ion-option>5</ion-option>
+                    <ion-option>6</ion-option>
+                    <ion-option>7</ion-option>
+                    <ion-option>8</ion-option>
+                    <ion-option>9</ion-option>
+                    <ion-option>10</ion-option>
+                    <ion-option>11</ion-option>
+                    <ion-option>12</ion-option>
+                    <ion-option>13</ion-option>
+                    <ion-option>14</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>16</ion-option>
+                    <ion-option>17</ion-option>
+                    <ion-option>18</ion-option>
+                    <ion-option>19</ion-option>
+                    <ion-option>20</ion-option>
+                    <ion-option>21</ion-option>
+                    <ion-option>22</ion-option>
+                    <ion-option>23</ion-option>
+                    <ion-option>24</ion-option>
+                    <ion-option>25</ion-option>
+                    <ion-option>26</ion-option>
+                    <ion-option>27</ion-option>
+                    <ion-option>28</ion-option>
+                    <ion-option>29</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>31</ion-option>
+                  </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-item>     
+                  <ion-label>Mes</ion-label>
+                  <ion-select [(ngModel)]="month">
+                    <ion-option>Enero</ion-option>
+                    <ion-option>Febrero</ion-option>
+                    <ion-option>Marzo</ion-option>
+                    <ion-option>Abril</ion-option>
+                    <ion-option>Mayo</ion-option>
+                    <ion-option>Junio</ion-option>
+                    <ion-option>Julio</ion-option>
+                    <ion-option>Agosto</ion-option>
+                    <ion-option>Septiembre</ion-option>
+                    <ion-option>Octubre</ion-option>
+                    <ion-option>Noviembre</ion-option>
+                    <ion-option>Diciembre</ion-option>
+                  </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-item>     
+                  <ion-label>Año</ion-label>
+                  <ion-select [(ngModel)]="year">
+                      <ion-option>2018</ion-option>
+                      <ion-option>2017</ion-option>
+                      <ion-option>2016</ion-option>
+                      <ion-option>2015</ion-option>
+                      <ion-option>2014</ion-option>
+                      <ion-option>2013</ion-option>
+                  </ion-select>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-list>
 </ion-content>

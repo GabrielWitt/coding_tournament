@@ -168,6 +168,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_alerts__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__maps_maps__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__alert_list_alert_list__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__create_alert_create_alert__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -177,6 +178,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -212,9 +214,12 @@ var HomePage = /** @class */ (function () {
     HomePage.prototype.openMaps = function () {
         this.nav.push(__WEBPACK_IMPORTED_MODULE_3__maps_maps__["a" /* MapsPage */]);
     };
+    HomePage.prototype.createAlert = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_5__create_alert_create_alert__["a" /* CreateAlertPage */]);
+    };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-grid>\n        <ion-row>\n          <ion-col col-12>\n              <ion-list> \n                  <ion-list-header>\n                    Últimos Incidentes\n                  </ion-list-header>\n                  <ion-item *ngFor="let alert of Alerts index as i" style="background-color: #eeeeee;">\n                    <h2>{{alert.alert_type}}</h2>\n                    <p>{{ alert.alert_date | date:\'short\' }}</p>\n                  </ion-item>\n              </ion-list> \n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-6>   \n              <button ion-button full (click)="openList()">Lista</button>\n            </ion-col>\n          <ion-col col-6>            \n            <button ion-button full (click)="openMaps()">Mapa</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
+            selector: 'home-page',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n        Deliktum\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-grid>\n        <ion-row>\n          <ion-col col-12>\n              <ion-list (click)="openList()"> \n                  <ion-list-header>\n                    Últimos Incidentes\n                  </ion-list-header>\n                  <ion-item *ngFor="let alert of Alerts index as i" style="background-color: #eeeeee;">\n                    <h2>{{alert.alert_type}}</h2>\n                    <p>{{ alert.alert_date | date:\'short\' }}</p>\n                  </ion-item>\n              </ion-list> \n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-6>   \n              <button style="font-size: 3rem;" ion-button full (click)="openList()"><ion-icon style="margin-right: 5px;" name="list-box"></ion-icon> Lista</button>\n            </ion-col>\n          <ion-col col-6>            \n            <button style="font-size: 3rem;" ion-button full (click)="openMaps()"><ion-icon style="margin-right: 5px;" name="map"></ion-icon> Mapa</button>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-6>   \n              <button style="font-size: 2.5rem; height: 9rem;" ion-button full (click)="createAlert()"><ion-icon style="margin-right: 5px;" name="create"></ion-icon> Reportar</button>\n            </ion-col>\n          <ion-col col-6>            \n            <button disabled style="font-size: 2rem; height: 9rem;" ion-button full><ion-icon style="margin-right: 5px;" name="podium"></ion-icon> Estadisticas</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */]) === "function" && _b || Object])
     ], HomePage);
@@ -377,6 +382,8 @@ var MyApp = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateAlertPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_alerts__ = __webpack_require__(79);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -388,6 +395,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 /**
  * Generated class for the CreateAlertPage page.
  *
@@ -395,20 +404,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var CreateAlertPage = /** @class */ (function () {
-    function CreateAlertPage(navCtrl, navParams) {
+    function CreateAlertPage(navCtrl, navParams, geolocation, alertsProv) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.geolocation = geolocation;
+        this.alertsProv = alertsProv;
+        this.newAlert = {
+            alert_type: "",
+            description: "",
+            gps_location: "",
+            alert_date: "",
+        };
+        this.Types = [
+            'Asalto',
+            'Robo',
+            'Pelea',
+            'Borrachera',
+            'Venta de Drogas',
+            'Asesinato Balacera',
+            'Vandalismo',
+            'Manifestación Violenta',
+            'Abuso policial',
+            'Abuso Infantil',
+            'Violencia Escolar',
+            'Atropellamiento',
+            'Persona Sospechosa',
+            'Posible Ladrón',
+            'Prostitución',
+            'Violencia Domestica',
+            'Posible Terrorismo',
+            'Pandillas Molestando',
+            'Soborno a Policías',
+            'Secuestro Express',
+            'Otro'
+        ];
+        this.getPosition();
     }
-    CreateAlertPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CreateAlertPage');
+    CreateAlertPage.prototype.getPosition = function () {
+        var _this = this;
+        this.geolocation.getCurrentPosition()
+            .then(function (response) {
+            _this.loadCoords(response);
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    CreateAlertPage.prototype.loadCoords = function (position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        this.newAlert.gps_location = latitude + "," + longitude;
     };
     CreateAlertPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-alert',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/'<!--\n  Generated template for the CreateAlertPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>create_alert</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/,
+            selector: 'page-create-alert',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/'<!--\n  Generated template for the CreateAlertPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Formulario de Alerta</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n          <ion-label>Filtro por tipo</ion-label>\n          <ion-select [(ngModel)]="newAlert.alert_type">\n            <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item style="margin-bottom: 10px; border-radius: 15px;">\n          <ion-input type="text" clearInput placeholder="Descripción" [(ngModel)]="newAlert.description" name="description"></ion-input>\n        </ion-item>     \n          <ion-grid>\n              <ion-row>\n                <ion-col col-4>\n                  <ion-item>     \n                  <ion-label>día</ion-label>\n                  <ion-select [(ngModel)]="day">\n                    <ion-option>1</ion-option>\n                    <ion-option>2</ion-option>\n                    <ion-option>3</ion-option>\n                    <ion-option>4</ion-option>\n                    <ion-option>5</ion-option>\n                    <ion-option>6</ion-option>\n                    <ion-option>7</ion-option>\n                    <ion-option>8</ion-option>\n                    <ion-option>9</ion-option>\n                    <ion-option>10</ion-option>\n                    <ion-option>11</ion-option>\n                    <ion-option>12</ion-option>\n                    <ion-option>13</ion-option>\n                    <ion-option>14</ion-option>\n                    <ion-option>15</ion-option>\n                    <ion-option>16</ion-option>\n                    <ion-option>17</ion-option>\n                    <ion-option>18</ion-option>\n                    <ion-option>19</ion-option>\n                    <ion-option>20</ion-option>\n                    <ion-option>21</ion-option>\n                    <ion-option>22</ion-option>\n                    <ion-option>23</ion-option>\n                    <ion-option>24</ion-option>\n                    <ion-option>25</ion-option>\n                    <ion-option>26</ion-option>\n                    <ion-option>27</ion-option>\n                    <ion-option>28</ion-option>\n                    <ion-option>29</ion-option>\n                    <ion-option>30</ion-option>\n                    <ion-option>31</ion-option>\n                  </ion-select>\n                  </ion-item>\n                </ion-col>\n                <ion-col col-4>\n                  <ion-item>     \n                  <ion-label>Mes</ion-label>\n                  <ion-select [(ngModel)]="month">\n                    <ion-option>Enero</ion-option>\n                    <ion-option>Febrero</ion-option>\n                    <ion-option>Marzo</ion-option>\n                    <ion-option>Abril</ion-option>\n                    <ion-option>Mayo</ion-option>\n                    <ion-option>Junio</ion-option>\n                    <ion-option>Julio</ion-option>\n                    <ion-option>Agosto</ion-option>\n                    <ion-option>Septiembre</ion-option>\n                    <ion-option>Octubre</ion-option>\n                    <ion-option>Noviembre</ion-option>\n                    <ion-option>Diciembre</ion-option>\n                  </ion-select>\n                  </ion-item>\n                </ion-col>\n                <ion-col col-4>\n                  <ion-item>     \n                  <ion-label>Año</ion-label>\n                  <ion-select [(ngModel)]="year">\n                      <ion-option>2018</ion-option>\n                      <ion-option>2017</ion-option>\n                      <ion-option>2016</ion-option>\n                      <ion-option>2015</ion-option>\n                      <ion-option>2014</ion-option>\n                      <ion-option>2013</ion-option>\n                  </ion-select>\n                  </ion-item>\n                </ion-col>\n            </ion-row>\n          </ion-grid>\n      </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\create-alert\create-alert.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_alerts__["a" /* AlertsProvider */]) === "function" && _d || Object])
     ], CreateAlertPage);
     return CreateAlertPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=create-alert.js.map
@@ -523,7 +577,7 @@ var AlertListPage = /** @class */ (function () {
     };
     AlertListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-alert-list',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/'<!--\n  Generated template for the AlertListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Registro de Incidentes</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n    <div item-end>\n        <button ion-button icon-only outline (click)="filterList()">\n          <ion-icon name="search"></ion-icon>\n        </button></div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/,
+            selector: 'page-alert-list',template:/*ion-inline-start:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/'<!--\n  Generated template for the AlertListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Registro de Incidentes</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n    <ion-item>\n      <ion-label>Filtro por tipo</ion-label>\n      <ion-select [(ngModel)]="filter">\n        <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>\n      </ion-select>\n      <div item-end>\n          <button ion-button icon-only outline (click)="filterList()">\n            <ion-icon name="search"></ion-icon>\n          </button>\n      </div>\n    </ion-item>\n  <ion-list> \n      <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">\n        <ion-avatar item-start>\n            {{i+1}} <!--img src="assets/img/avatar-ts-woody.png"-->\n        </ion-avatar>\n        <h2>{{alert.alert_type}}</h2>\n        <h3>{{alert.gps_location}}</h3>\n        <p>{{ alert.alert_date | date:\'short\' }}</p>\n      </ion-item>\n      <ion-item *ngIf="loadMore" (click)="AddItems()" style="background-color: #eeeeee;">\n          <h2>Mostrar 10 items más</h2>\n      </ion-item>\n  </ion-list> \n</ion-content>'/*ion-inline-end:"C:\Workspace\coding_tournament1\src\pages\alert-list\alert-list.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_alerts__["a" /* AlertsProvider */]) === "function" && _b || Object])
     ], AlertListPage);
@@ -572,11 +626,24 @@ var AlertsProvider = /** @class */ (function () {
             });
         });
     };
+    AlertsProvider.prototype.PostAlert = function (data) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            _this.http.post('http://localhost:8080/api/newalert', data, { headers: headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                resolve(data);
+            });
+        });
+    };
     AlertsProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
     ], AlertsProvider);
     return AlertsProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=alerts.js.map

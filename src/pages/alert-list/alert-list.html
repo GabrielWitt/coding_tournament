@@ -15,10 +15,11 @@
       <ion-select [(ngModel)]="filter">
         <ion-option *ngFor="let type of Types index as i" [value]="type">{{type}} </ion-option>
       </ion-select>
-    <div item-end>
-        <button ion-button icon-only outline (click)="filterList()">
-          <ion-icon name="search"></ion-icon>
-        </button></div>
+      <div item-end>
+          <button ion-button icon-only outline (click)="filterList()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+      </div>
     </ion-item>
   <ion-list> 
       <ion-item *ngFor="let alert of showAlertList index as i" style="background-color: #eeeeee;">

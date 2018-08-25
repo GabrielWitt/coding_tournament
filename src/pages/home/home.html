@@ -10,7 +10,7 @@
     <ion-grid>
         <ion-row>
           <ion-col col-12>
-              <ion-list> 
+              <ion-list (click)="openList()"> 
                   <ion-list-header>
                     Últimos Incidentes
                   </ion-list-header>
@@ -23,10 +23,18 @@
         </ion-row>
         <ion-row>
             <ion-col col-6>   
-              <button ion-button full (click)="openList()">Lista</button>
+              <button style="font-size: 3rem;" ion-button full (click)="openList()"><ion-icon style="margin-right: 5px;" name="list-box"></ion-icon> Lista</button>
             </ion-col>
           <ion-col col-6>            
-            <button ion-button full (click)="openMaps()">Mapa</button>
+            <button style="font-size: 3rem;" ion-button full (click)="openMaps()"><ion-icon style="margin-right: 5px;" name="map"></ion-icon> Mapa</button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6>   
+              <button style="font-size: 2.5rem; height: 9rem;" ion-button full (click)="createAlert()"><ion-icon style="margin-right: 5px;" name="create"></ion-icon> Reportar</button>
+            </ion-col>
+          <ion-col col-6>            
+            <button disabled style="font-size: 2rem; height: 9rem;" ion-button full><ion-icon style="margin-right: 5px;" name="podium"></ion-icon> Estadisticas</button>
           </ion-col>
         </ion-row>
       </ion-grid>

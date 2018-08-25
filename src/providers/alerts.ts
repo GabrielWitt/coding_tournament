@@ -20,4 +20,16 @@ export class AlertsProvider {
         });
     });
   }
+
+  PostAlert(data): Promise<any[]>{
+    return new Promise(resolve => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      this.http.post('http://localhost:8080/api/newalert', data,{headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        });
+    });
+  }
 }

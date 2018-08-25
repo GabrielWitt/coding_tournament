@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AlertsProvider } from '../../providers/alerts';
 import { MapsPage } from '../maps/maps';
 import { AlertListPage } from '../alert-list/alert-list';
+import { CreateAlertPage } from '../create-alert/create-alert';
 
 @Component({
   selector: 'home-page',
@@ -42,5 +43,9 @@ export class HomePage {
 
   openMaps(){
     this.nav.push(MapsPage);
+  }
+
+  createAlert(){
+    this.nav.push(CreateAlertPage);
   }
 }

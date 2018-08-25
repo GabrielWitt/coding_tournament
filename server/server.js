@@ -101,6 +101,24 @@ Alert.count({}, function(err, count){
             }
         })
     })
+
+    app.post('/api/alerts',function(req,res){
+        var today = new Date();
+        var newAlert = new Alert({
+            alert_type: req.alert_type,
+            description: req.description,
+            gps_location: req.gps_location,
+            alert_date: req.gps_location,
+            uploadDate: today
+        });        
+        newAlert.save(function(err, doc){
+            if (!err) {
+                res.json(doc)
+            }else{
+                res.send(err);
+            }
+        })
+    })
  
 // listen
 app.listen(8080);

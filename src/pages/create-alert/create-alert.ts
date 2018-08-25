@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { AlertsProvider } from '../../providers/alerts';
 
 /**
  * Generated class for the CreateAlertPage page.
@@ -15,11 +17,59 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CreateAlertPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  newAlert = {
+    alert_type: "",
+    description: "",
+    gps_location: "",
+    alert_date: "",
+  }
+  Types = [
+    'Asalto',
+    'Robo', 
+    'Pelea', 
+    'Borrachera', 
+    'Venta de Drogas', 
+    'Asesinato Balacera', 
+    'Vandalismo',
+    'Manifestación Violenta',
+    'Abuso policial',
+    'Abuso Infantil',
+    'Violencia Escolar', 
+    'Atropellamiento',
+    'Persona Sospechosa',
+    'Posible Ladrón',
+    'Prostitución',
+    'Violencia Domestica', 
+    'Posible Terrorismo',
+    'Pandillas Molestando',
+    'Soborno a Policías',
+    'Secuestro Express',
+    'Otro'            
+  ];
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private geolocation: Geolocation,
+    public alertsProv:AlertsProvider
+  ) {
+    this.getPosition();
+  }
+  
+  getPosition():any{
+    this.geolocation.getCurrentPosition()
+    .then(response => {
+      this.loadCoords(response);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateAlertPage');
+  loadCoords(position: Geoposition){
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    this.newAlert.gps_location = latitude+","+longitude;
   }
 
 }
